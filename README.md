@@ -13,7 +13,7 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 # Running the auto buy script
 To run the script we must gain a new Api-Key from browser. to achieve this follow the below steps:
 ## Finding Api-Key value
-Open the DevTools tab on the browser
+Open the DevTools tab on the browser (You can press Ctrl+Shift+C shortcut to open this tab)
 ![DevTools](api-key.png)
 1. Switch to "Network" tab
 2. For better result, filter the requests by clicking on "Fetch/XHR"
