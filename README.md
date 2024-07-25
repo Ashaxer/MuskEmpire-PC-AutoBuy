@@ -32,7 +32,7 @@ just make a folder, download the files into it, run the script and paste the Api
 Linux:
 ```bash
 cd && mkdir MuskEmpireAuto && cd MuskEmpireAuto
-curl -o https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/elon_improve_calc.py
-curl -o https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/main.py
+curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/elon_improve_calc.py
+curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/main.py
 python3 main.py
 ```
