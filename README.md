@@ -6,6 +6,33 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 1. Install the Resource Override extention on your browser ([Chrome](https://chromewebstore.google.com/detail/resource-override/pkoacgokdfckfpndoffpifphamojphii))
 2. Open the extension settings and enter the following data:
 3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://evgeniyvorobev.github.io/hamster-kombat-bot/telegram-web-app.js`
-4. ![Extension settings](settings.png)
-5. Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dmuskempire_bot%26appname%3Dgame%26startapp%3Dhero521693536) and run the game
-## ![Result](result.png)
+![Extension settings](settings.png)
+4. Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dmuskempire_bot%26appname%3Dgame%26startapp%3Dhero521693536) and run the game
+![Result](result.png)
+
+# Running the auto buy script
+To run the script we must gain a new Api-Key from browser. to achieve this follow the below steps:
+## Finding Api-Key value
+Open the DevTools tab on the browser
+![DevTools](api-key.png)
+1. Switch to "Network" tab
+2. For better result, filter the requests by clicking on "Fetch/XHR"
+3. Find one of the following requests and click on it:
+   ("dbs", "assets", "all")
+   if you couldn't find it, you can wait about 30 seconds, "sync" request will apear at the bottom of the list
+   or you can make a purchase and "improve" request will appear too
+4. Under "Headers" tab, scroll down untill you reach "Request Headers"
+5. Find the "Api-Key" Key and copy the value of it
+
+## Downloading and running the python scripts
+You can use this bot on any machine supporting python
+just make a folder, download the files into it, run the script and paste the Api-Key you got earlier
+(Note: Try not using old Api-Key values for this script, Use newly generated Api-Key from last step each time to prevent from getting banned)
+
+Linux:
+```bash
+cd && mkdir MuskEmpireAuto && cd MuskEmpireAuto
+curl -o https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/elon_improve_calc.py
+curl -o https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/main.py
+python3 main.py
+```
