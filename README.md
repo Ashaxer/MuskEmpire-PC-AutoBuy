@@ -8,4 +8,4 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://evgeniyvorobev.github.io/hamster-kombat-bot/telegram-web-app.js`
 4. ![Extension settings](settings.png)
 5. Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dmuskempire_bot%26appname%3Dgame%26startapp%3Dhero521693536) and run the game
-## ![Result](result.jpg)
+## ![Result](result.png)
