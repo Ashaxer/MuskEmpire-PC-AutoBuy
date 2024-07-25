@@ -27,7 +27,7 @@ Open the DevTools tab on the browser
 ## Downloading and running the python scripts
 You can use this bot on any machine supporting python
 just make a folder, download the files into it, run the script and paste the Api-Key you got earlier
-(Note: Try not using old Api-Key values for this script, Use newly generated Api-Key from last step each time to prevent from getting banned)
+(Note: Try not using old Api-Key values for this script, Use newly generated Api-Key from [last step](https://github.com/Ashaxer/MuskEmpire_autobuy/blob/main/README.md#finding-api-key-value) each time to prevent from getting banned)
 
 Linux:
 ```bash
