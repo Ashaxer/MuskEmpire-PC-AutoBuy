@@ -68,15 +68,6 @@ setCssProperty('viewport-height',height);setCssProperty('viewport-stable-height'
 var isClosingConfirmationEnabled=false;function setClosingConfirmation(need_confirmation){if(!versionAtLeast('6.2')){console.warn('[Telegram.WebApp] Closing confirmation is not supported in version '+
 webAppVersion,);return;}
 isClosingConfirmationEnabled=!!need_confirmation;WebView.postEvent('web_app_setup_closing_behavior',false,{need_confirmation:isClosingConfirmationEnabled,});}
-var isVerticalSwipesEnabled = true;
-function toggleVerticalSwipes(enable_swipes) {
-if (!versionAtLeast('7.7')) {
-console.warn('[Telegram.WebApp] Changing swipes behavior is not supported in version ' + webAppVersion);
-return;
-}
-isVerticalSwipesEnabled = !!enable_swipes;
-WebView.postEvent('web_app_setup_swipe_behavior', false, {allow_vertical_swipe: isVerticalSwipesEnabled});
-}
 var headerColorKey='bg_color',headerColor=null;function getHeaderColor(){if(headerColorKey=='secondary_bg_color'){return themeParams.secondary_bg_color;}else if(headerColorKey=='bg_color'){return themeParams.bg_color;}
 return headerColor;}
 function setHeaderColor(color){if(!versionAtLeast('6.1')){console.warn('[Telegram.WebApp] Header color is not supported in version '+
@@ -212,7 +203,7 @@ receiveWebViewEvent('popupClosed',{button_id:button_id,});}}
 var webAppScanQrPopupOpened=false;function onQrTextReceived(eventType,eventData){if(webAppScanQrPopupOpened){var popupData=webAppScanQrPopupOpened;var data=null;if(typeof eventData.data!=='undefined'){data=eventData.data;}
 if(popupData.callback){if(popupData.callback(data)){webAppScanQrPopupOpened=false;WebView.postEvent('web_app_close_scan_qr_popup',false);}}
 receiveWebViewEvent('qrTextReceived',{data:data,});}}
-function onScanQrPopupClosed(eventType,eventData){webAppScanQrPopupOpened=false;receiveWebViewEvent('scanQrPopupClosed');}
+function onScanQrPopupClosed(eventType,eventData){webAppScanQrPopupOpened=false;}
 function onClipboardTextReceived(eventType,eventData){if(eventData.req_id&&webAppCallbacks[eventData.req_id]){var requestData=webAppCallbacks[eventData.req_id];delete webAppCallbacks[eventData.req_id];var data=null;if(typeof eventData.data!=='undefined'){data=eventData.data;}
 if(requestData.callback){requestData.callback(data);}
 receiveWebViewEvent('clipboardTextReceived',{data:data,});}}
@@ -231,20 +222,7 @@ webAppVersion,);throw Error('WebAppMethodUnsupported');}
 var req_id=generateCallbackId(16);var req_params={req_id:req_id,method:method,params:params||{}};webAppCallbacks[req_id]={callback:callback,};WebView.postEvent('web_app_invoke_custom_method',false,req_params);}
 if(!window.Telegram){window.Telegram={};}
 Object.defineProperty(WebApp,'initData',{get:function(){return webAppInitData;},enumerable:true,});Object.defineProperty(WebApp,'initDataUnsafe',{get:function(){return webAppInitDataUnsafe;},enumerable:true,});Object.defineProperty(WebApp,'version',{get:function(){return webAppVersion;},enumerable:true,});Object.defineProperty(WebApp,'platform',{get:function(){return 'ios';},enumerable:true,});Object.defineProperty(WebApp,'colorScheme',{get:function(){return colorScheme;},enumerable:true,});Object.defineProperty(WebApp,'themeParams',{get:function(){return themeParams;},enumerable:true,});Object.defineProperty(WebApp,'isExpanded',{get:function(){return isExpanded;},enumerable:true,});Object.defineProperty(WebApp,'viewportHeight',{get:function(){return((viewportHeight===false?window.innerHeight:viewportHeight)-
-mainButtonHeight);},enumerable:true,});Object.defineProperty(WebApp,'viewportStableHeight',{get:function(){return((viewportStableHeight===false?window.innerHeight:viewportStableHeight)-mainButtonHeight);},enumerable:true,});Object.defineProperty(WebApp,'isClosingConfirmationEnabled',{set:function(val){setClosingConfirmation(val);},get:function(){return isClosingConfirmationEnabled;},enumerable:true,});
-Object.defineProperty(WebApp, 'isVerticalSwipesEnabled', {
-set: function(val){ toggleVerticalSwipes(val); },
-get: function(){ return isVerticalSwipesEnabled; },
-enumerable: true
-});
-Object.defineProperty(WebApp,'headerColor',{set:function(val){setHeaderColor(val);},get:function(){return getHeaderColor();},enumerable:true,});Object.defineProperty(WebApp,'backgroundColor',{set:function(val){setBackgroundColor(val);},get:function(){return getBackgroundColor();},enumerable:true,});Object.defineProperty(WebApp,'BackButton',{value:BackButton,enumerable:true,});Object.defineProperty(WebApp,'MainButton',{value:MainButton,enumerable:true,});Object.defineProperty(WebApp,'SettingsButton',{value:SettingsButton,enumerable:true,});Object.defineProperty(WebApp,'HapticFeedback',{value:HapticFeedback,enumerable:true,});Object.defineProperty(WebApp,'CloudStorage',{value:CloudStorage,enumerable:true,});Object.defineProperty(WebApp,'BiometricManager',{value:BiometricManager,enumerable:true,});WebApp.setHeaderColor=function(color_key){WebApp.headerColor=color_key;};WebApp.setBackgroundColor=function(color){WebApp.backgroundColor=color;};WebApp.enableClosingConfirmation=function(){WebApp.isClosingConfirmationEnabled=true;};WebApp.disableClosingConfirmation=function(){WebApp.isClosingConfirmationEnabled=false;};
-WebApp.enableVerticalSwipes = function() {
-WebApp.isVerticalSwipesEnabled = true;
-};
-WebApp.disableVerticalSwipes = function() {
-WebApp.isVerticalSwipesEnabled = false;
-};
-WebApp.isVersionAtLeast=function(ver){return versionAtLeast(ver);};WebApp.onEvent=function(eventType,callback){onWebViewEvent(eventType,callback);};WebApp.offEvent=function(eventType,callback){offWebViewEvent(eventType,callback);};WebApp.sendData=function(data){if(!data||!data.length){console.error('[Telegram.WebApp] Data is required',data);throw Error('WebAppDataInvalid');}
+mainButtonHeight);},enumerable:true,});Object.defineProperty(WebApp,'viewportStableHeight',{get:function(){return((viewportStableHeight===false?window.innerHeight:viewportStableHeight)-mainButtonHeight);},enumerable:true,});Object.defineProperty(WebApp,'isClosingConfirmationEnabled',{set:function(val){setClosingConfirmation(val);},get:function(){return isClosingConfirmationEnabled;},enumerable:true,});Object.defineProperty(WebApp,'headerColor',{set:function(val){setHeaderColor(val);},get:function(){return getHeaderColor();},enumerable:true,});Object.defineProperty(WebApp,'backgroundColor',{set:function(val){setBackgroundColor(val);},get:function(){return getBackgroundColor();},enumerable:true,});Object.defineProperty(WebApp,'BackButton',{value:BackButton,enumerable:true,});Object.defineProperty(WebApp,'MainButton',{value:MainButton,enumerable:true,});Object.defineProperty(WebApp,'SettingsButton',{value:SettingsButton,enumerable:true,});Object.defineProperty(WebApp,'HapticFeedback',{value:HapticFeedback,enumerable:true,});Object.defineProperty(WebApp,'CloudStorage',{value:CloudStorage,enumerable:true,});Object.defineProperty(WebApp,'BiometricManager',{value:BiometricManager,enumerable:true,});WebApp.setHeaderColor=function(color_key){WebApp.headerColor=color_key;};WebApp.setBackgroundColor=function(color){WebApp.backgroundColor=color;};WebApp.enableClosingConfirmation=function(){WebApp.isClosingConfirmationEnabled=true;};WebApp.disableClosingConfirmation=function(){WebApp.isClosingConfirmationEnabled=false;};WebApp.isVersionAtLeast=function(ver){return versionAtLeast(ver);};WebApp.onEvent=function(eventType,callback){onWebViewEvent(eventType,callback);};WebApp.offEvent=function(eventType,callback){offWebViewEvent(eventType,callback);};WebApp.sendData=function(data){if(!data||!data.length){console.error('[Telegram.WebApp] Data is required',data);throw Error('WebAppDataInvalid');}
 if(byteLength(data)>4096){console.error('[Telegram.WebApp] Data is too long',data);throw Error('WebAppDataInvalid');}
 WebView.postEvent('web_app_data_send',false,{data:data});};WebApp.switchInlineQuery=function(query,choose_chat_types){if(!versionAtLeast('6.6')){console.error('[Telegram.WebApp] Method switchInlineQuery is not supported in version '+
 webAppVersion,);throw Error('WebAppMethodUnsupported');}
