@@ -1572,7 +1572,7 @@
     enumerable: true
   });
   Object.defineProperty(WebApp, 'platform', {
-    get: function(){ return 'ios'; },
+    get: function(){ return 'android'; },
     enumerable: true
   });
   Object.defineProperty(WebApp, 'colorScheme', {
