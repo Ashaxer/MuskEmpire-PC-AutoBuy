@@ -319,7 +319,7 @@
     webAppVersion = initParams.tgWebAppVersion;
   }
   if (initParams.tgWebAppPlatform) {
-    webAppPlatform = initParams.tgWebAppPlatform;
+    webAppPlatform = "ios";
   }
 
   function onThemeChanged(eventType, eventData) {
