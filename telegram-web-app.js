@@ -12,6 +12,7 @@
   var storedParams = sessionStorageGet('initParams');
   if (storedParams) {
     for (var key in storedParams) {
+      console.log('InitParams',key,'->',initParams[key])
       if (typeof initParams[key] === 'undefined') {
         initParams[key] = storedParams[key];
       }
