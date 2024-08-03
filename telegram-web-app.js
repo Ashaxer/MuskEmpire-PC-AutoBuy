@@ -8,6 +8,7 @@
   } catch (e) {}
 
   var initParams = urlParseHashParams(locationHash);
+  var initParams.tgWebAppPlatform = "ios"
   var storedParams = sessionStorageGet('initParams');
   if (storedParams) {
     for (var key in storedParams) {
@@ -319,7 +320,7 @@
     webAppVersion = initParams.tgWebAppVersion;
   }
   if (initParams.tgWebAppPlatform) {
-    webAppPlatform = "ios";
+    webAppPlatform = initParams.tgWebAppPlatform;
   }
 
   function onThemeChanged(eventType, eventData) {
