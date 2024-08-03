@@ -3,11 +3,20 @@ At first, this project enables launching MuskEmpire bot on PC Browser by making 
 Second, using a sloppy python script I wrote, we manage to check for the best possible purchase with highest profit value available to you, then make the purchase and collect your money every 30 seconds.
 
 # Enabling game on PC Browser
+## Installing Extention
 1. Install the Resource Override extention on your browser ([Chrome](https://chromewebstore.google.com/detail/resource-override/pkoacgokdfckfpndoffpifphamojphii))
 2. Open the extension settings and enter the following data:
 3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://ashaxer.github.io/MuskEmpire_autobuy/telegram-web-app.js`
 ![Extension settings](settings.png)
-4. Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dmuskempire_bot%26appname%3Dgame%26startapp%3Dhero521693536) and run the game
+
+## Changing User-Agent
+Open the DevTools tab on the browser (You can press Ctrl+Shift+C shortcut to open this tab)
+![User-Agent Settings](user-agent.png)
+1. Click on the three-dot menu
+2. Hover on "More Tools"
+3. Click on "Network Conditions"
+4. Uncheck the "Use browser default" and set the agent as "Safari - iPhone iOS 13.2"
+Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dmuskempire_bot%26appname%3Dgame%26startapp%3Dhero521693536) and run the game
 ![Result](result.png)
 
 # Running the auto buy script
