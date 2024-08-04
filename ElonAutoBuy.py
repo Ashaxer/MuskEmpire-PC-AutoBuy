@@ -389,15 +389,19 @@ if __name__ == "__main__":
     Hero.reqAll()
 
     while True:
-        print("--====== UPGRADED ======--")
-        best_item = Hero.Calculate()[0]
-        Hero.reqImprove(best_item["key"])
-        print(f"Purchased: {best_item['title']} from {best_item['categ']}")
-        print(f"New Level: {best_item['level']+1}")
-        print(f"Price: {numbify(best_item['price'])}")
-        print(f"Profit: {numbify(best_item['profit'])}")
-        print(f"Ratio: {round(best_item['ratio'],4)}")
-        print()
+        best_item = Hero.Calculate()
+        try:
+            best_item = best_item[0]
+            Hero.reqImprove(best_item["key"])
+            print("--====== UPGRADED ======--")
+            print(f"Purchased: {best_item['title']} from {best_item['categ']}")
+            print(f"New Level: {best_item['level']+1}")
+            print(f"Price: {numbify(best_item['price'])}")
+            print(f"Profit: {numbify(best_item['profit'])}")
+            print(f"Ratio: {round(best_item['ratio'],4)}")
+            print()
+        except:
+            pass
         print("--====== STATUS ======--")
         print("Hero:",Hero.hero_name)
         print("Level:",Hero.hero_level)
