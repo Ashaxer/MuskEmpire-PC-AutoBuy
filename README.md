@@ -15,7 +15,7 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 ## Installing Extention
 1. Install the Resource Override extention on your browser ([Chrome](https://chromewebstore.google.com/detail/resource-override/pkoacgokdfckfpndoffpifphamojphii))
 2. Open the extension settings and enter the following data:
-3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://ashaxer.github.io/MuskEmpire_autobuy/telegram-web-app.js`
+3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://ashaxer.github.io/MuskEmpire-PC-AutoBuy/telegram-web-app.js`
 ![Extension settings](settings.png)
 
 ## Changing User-Agent
@@ -44,12 +44,12 @@ Open the DevTools tab on the browser (You can press Ctrl+Shift+C shortcut to ope
 You can use this bot on any machine supporting python
 (Make sure you have reqired packages)
 just make a folder, download the files into it, run the script and paste the Payload  you got earlier
-(Note: Try not using old Payload values for this script, Use newly generated Payload from [last step](https://github.com/Ashaxer/MuskEmpire_autobuy/blob/main/README.md#finding-auth-payload-value) each time to prevent from getting banned)
+(Note: Try not using old Payload values for this script, Use newly generated Payload from [last step](https://github.com/Ashaxer/MuskEmpire-PC-AutoBuy/blob/main/README.md#finding-auth-payload-value) each time to prevent from getting banned)
 
 Linux:
 ```bash
 cd && mkdir MuskEmpireAuto && cd MuskEmpireAuto
-curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/ElonAutoBuy.py
+curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire-PC-AutoBuy/main/ElonAutoBuy.py
 pip3 install humanize
 python3 ElonAutoBuy.py
 ```
