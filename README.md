@@ -1,6 +1,13 @@
 # Introducing project
 At first, this project enables launching MuskEmpire bot on PC Browser by making browser use a modified web-app using an extention called Resource Override
-Second, using a sloppy python script I wrote, we manage to check for the best possible purchase with highest profit value available to you, then make the purchase and collect your money every 30 seconds.
+Second, using a sloppy python script I wrote, we manage to check for the best possible purchase with highest profit value available to you, then make the purchase and collect your money every 60 seconds.
+
+| Feature  | Supported |
+| ------------- | ------------- |
+| Auto claim offline bonus  |  ✅  |
+| Auto collect money every minute  |  ✅  |
+| Calculate and purchace best skill  |  ✅  |
+| Customize friendly coded for even newbies  |  ✅✅✅  |
 
 # Enabling game on PC Browser
 ## Installing Extention
