@@ -7,7 +7,7 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 | Auto claim offline bonus  |  ✅  |
 | Auto collect money every minute  |  ✅  |
 | Calculate and purchace best skill  |  ✅  |
-| Customize friendly coded for even newbies  |  ✅✅✅  |
+| Friendly coded for python newbies  |  ✅  |
 
 # Enabling game on PC Browser
 ## Installing Extention
