@@ -20,28 +20,27 @@ Open [Bot MuskEmpire](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fd
 ![Result](result.png)
 
 # Running the auto buy script
-To run the script we must gain a new Api-Key from browser. to achieve this follow the below steps:
-## Finding Api-Key value
+To run the script we must copy the payload of auth request in source view mode from browser. to achieve this follow the below steps:
+## Finding auth payload value
 Open the DevTools tab on the browser (You can press Ctrl+Shift+C shortcut to open this tab)
-![DevTools](api-key.png)
+![DevTools](Payload.jpg)
 1. Switch to "Network" tab
 2. For better result, filter the requests by clicking on "Fetch/XHR"
-3. Find one of the following requests and click on it:
-   ("dbs", "assets", "all")
-   if you couldn't find it, you can wait about 30 seconds, "sync" request will apear at the bottom of the list
-   or you can make a purchase and "improve" request will appear too
-4. Under "Headers" tab, scroll down untill you reach "Request Headers"
-5. Find the "Api-Key" Key and copy the value of it
+3. Find  the "auth" request and click on it
+4. Switch to "Payload" of request details
+5. Click on "view source" to change view mode
+6. Select all the payload value (Thriple-Click) and Copy it
 
 ## Downloading and running the python scripts
 You can use this bot on any machine supporting python
-just make a folder, download the files into it, run the script and paste the Api-Key you got earlier
-(Note: Try not using old Api-Key values for this script, Use newly generated Api-Key from [last step](https://github.com/Ashaxer/MuskEmpire_autobuy/blob/main/README.md#finding-api-key-value) each time to prevent from getting banned)
+(Make sure you have reqired packages)
+just make a folder, download the files into it, run the script and paste the Payload  you got earlier
+(Note: Try not using old Payload values for this script, Use newly generated Payload from [last step](https://github.com/Ashaxer/MuskEmpire_autobuy/blob/main/README.md#finding-auth-payload-value) each time to prevent from getting banned)
 
 Linux:
 ```bash
 cd && mkdir MuskEmpireAuto && cd MuskEmpireAuto
-curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/elon_improve_calc.py
-curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/main.py
+curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/ElonAutoBuy.py
+pip3 install humanize
 python3 main.py
 ```
