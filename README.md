@@ -42,5 +42,5 @@ Linux:
 cd && mkdir MuskEmpireAuto && cd MuskEmpireAuto
 curl -O https://raw.githubusercontent.com/Ashaxer/MuskEmpire_autobuy/main/ElonAutoBuy.py
 pip3 install humanize
-python3 main.py
+python3 ElonAutoBuy.py
 ```
