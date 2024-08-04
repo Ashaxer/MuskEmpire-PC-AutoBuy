@@ -16,7 +16,10 @@ base_url = "https://game.xempire.io"
 class User:
     def __init__(self, payload_data):
         self.hero_name = None
+        self.exp = None
+        self.levelup_progress = None
         self.hero_level = None
+        self.hero_title = None
         self.friends = None
         self.money = None
         self.moneyPH = None
@@ -29,6 +32,7 @@ class User:
         self.first_run = True
         self.payload_data = payload_data
         self.apikey = get_key_from_payload(payload_data)
+
 
         self.lock = threading.Lock()
         self.stop_event = threading.Event()
@@ -74,10 +78,12 @@ class User:
             self.all_data = response
             self.hero_name = response["data"]["profile"]["userName"]
             self.friends = response["data"]["profile"]["friends"]
+            self.exp = response["data"]["hero"]["exp"]
             self.hero_level = response["data"]["hero"]["level"]
             self.money = response["data"]["hero"]["money"]
             self.moneyPH = response["data"]["hero"]["moneyPerHour"]
             self.hero_skills = response["data"]["skills"]
+            self._calculate_levelupProgress()
             return self.all_data
         except Exception as e:
             print("Error at reqAll:\n", e)
@@ -96,8 +102,10 @@ class User:
                 self.improve_data = response
                 self.hero_level = response["data"]["hero"]["level"]
                 self.money = response["data"]["hero"]["money"]
+                self.exp = response["data"]["hero"]["exp"]
                 self.moneyPH = response["data"]["hero"]["moneyPerHour"]
                 self.hero_skills = response["data"]["skill"]
+                self._calculate_levelupProgress()
                 return self.improve_data
         except Exception as e:
             print("Error at reqImprove:\n", e)
@@ -124,15 +132,17 @@ class User:
         try:
             response = post(url=url, headers=headers, data=payload).json()
             if response["success"]:
-                print("-=Synced=-")
+                print("--=== Synced ===--")
                 self.hero_level = response["data"]["hero"]["level"]
                 self.money = response["data"]["hero"]["money"]
+                self.exp = response["data"]["hero"]["exp"]
                 self.moneyPH = response["data"]["hero"]["moneyPerHour"]
+                self._calculate_levelupProgress()
                 return response
             else:
-                print(f"-=Sync Error: {response['error']}=-")
+                print(f"--=== Sync Error: {response['error']} ===--")
         except Exception as e:
-            print(f"-=Sync Error: {e}=-")
+            print(f"--=== Sync Error: {e} ===--")
 
     def reqSync(self):
         payload = {}
@@ -142,20 +152,26 @@ class User:
         try:
             response = post(url, headers=headers, data=payload).json()
             if response["success"]:
-                print("-=Synced=-")
+                print("--=== Synced ===--")
                 self.hero_level = response["data"]["hero"]["level"]
                 self.money = response["data"]["hero"]["money"]
+                self.exp = response["data"]["hero"]["exp"]
                 self.moneyPH = response["data"]["hero"]["moneyPerHour"]
+                self._calculate_levelupProgress()
                 return response
             else:
-                print(f"-=Sync Error: {response['error']}=-")
+                print(f"--=== Sync Error: {response['error']} ===--")
         except Exception as e:
-            print(f"-=Sync Error: {e}=-")
+            print(f"--=== Sync Error: {e} ===--")
 
     def _convert_datetime2timestamp(self):
         for my_skill, my_limit in self.hero_skills.items():
             if type(my_limit["finishUpgradeDate"]) is str:
                 self.hero_skills[my_skill]["finishUpgradeDate"] = datetime.strptime(my_limit["finishUpgradeDate"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).timestamp()
+
+    def _calculate_levelupProgress(self):
+        self.levelup_progress = (self.exp - self.dbs_data["data"]["dbLevels"][self.hero_level-1]["exp"]) / (self.dbs_data["data"]["dbLevels"][self.hero_level]["exp"] - self.dbs_data["data"]["dbLevels"][self.hero_level-1]["exp"])
+        self.hero_title = self.dbs_data["data"]["dbLevels"][self.hero_level]["title"]
 
     def Calculate(self):
         skills = self.dbs_data["data"]["dbSkills"]
@@ -393,7 +409,7 @@ if __name__ == "__main__":
         try:
             best_item = best_item[0]
             Hero.reqImprove(best_item["key"])
-            print("--====== UPGRADED ======--")
+            print("--===≡≡≡≡≡≡ UPGRADED ≡≡≡≡≡≡===--")
             print(f"Purchased: {best_item['title']} from {best_item['categ']}")
             print(f"New Level: {best_item['level']+1}")
             print(f"Price: {numbify(best_item['price'])}")
@@ -402,13 +418,13 @@ if __name__ == "__main__":
             print()
         except:
             pass
-        print("--====== STATUS ======--")
-        print("Hero:",Hero.hero_name)
-        print("Level:",Hero.hero_level)
+        print("--===≡≡≡≡≡≡ STATUS ≡≡≡≡≡≡===--")
+        print("Hero:",Hero.hero_name, f"({Hero.hero_title})")
+        print("Level:",Hero.hero_level, f"({round(Hero.levelup_progress*100)}%)")
         print("Money:",numbify(Hero.money))
         print("Profit/H",numbify(Hero.moneyPH))
         print()
         timer = random.randint(3,15)
-        print(f"--====== Waiting {timer} Secs ======--")
+        print(f"--=== Waiting {timer} Secs ===--")
         time.sleep(timer)
         print()
