@@ -396,7 +396,7 @@ if __name__ == "__main__":
         print(f"New Level: {best_item['level']+1}")
         print(f"Price: {numbify(best_item['price'])}")
         print(f"Profit: {numbify(best_item['profit'])}")
-        print(f"Ratio: {numbify(best_item['ratio'])}")
+        print(f"Ratio: {round(best_item['ratio'],4)}")
         print()
         print("--====== STATUS ======--")
         print("Hero:",Hero.hero_name)
