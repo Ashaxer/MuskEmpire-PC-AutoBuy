@@ -115,7 +115,7 @@ class User:
                 new_data = self.reqSync()
                 with self.lock:
                     self.sync_data = new_data
-            time.sleep(30)
+            time.sleep(60)
     def reqClaim(self):
         payload = {}
         payload = json.dumps(payload,separators=(",",":"))
