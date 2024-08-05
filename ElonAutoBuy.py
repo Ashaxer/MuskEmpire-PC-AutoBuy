@@ -424,7 +424,11 @@ if __name__ == "__main__":
         print("Money:",numbify(Hero.money))
         print("Profit/H",numbify(Hero.moneyPH))
         print()
-        timer = random.randint(3,15)
+        if Hero.money < (Hero.moneyPH / 5):
+            print("--=== Low Amount of Money Detected. Sleeping longer ===--")
+            timer = random.randint(5400,14400)
+        else:
+            timer = random.randint(3,15)
         print(f"--=== Waiting {timer} Secs ===--")
         time.sleep(timer)
         print()
