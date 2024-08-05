@@ -217,9 +217,6 @@ class User:
                                 self.friends):
                             if len(skill_limit["requiredSkills"]) == 0:
                                 qualified = True
-                            else:
-                                for req_skill, req_level in skill_limit["requiredSkills"].items():
-                                    if self.hero_skills[req_skill]["level"] >= req_level: qualified = True
             if qualified:
                 qualified_skill = {}
                 qualified_skill["key"] = skill["key"]
