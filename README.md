@@ -1,5 +1,5 @@
 # Introducing project
-At first, this project enables launching MuskEmpire bot on PC Browser by making browser use a modified web-app using an extention called Resource Override
+At first, this project enables launching MuskEmpire bot (and all other TG-Webapps like HamsterKombat) on PC Browser by making browser use a modified web-app using an extention called Resource Override
 Second, using a sloppy python script I wrote, we manage to check for the best possible purchase with highest profit value available to you, then make the purchase and collect your money every 60 seconds.
 
 
@@ -16,6 +16,7 @@ Second, using a sloppy python script I wrote, we manage to check for the best po
 1. Install the Resource Override extention on your browser ([Chrome](https://chromewebstore.google.com/detail/resource-override/pkoacgokdfckfpndoffpifphamojphii))
 2. Open the extension settings and enter the following data:
 3. Tab URL: `*` From: `https://telegram.org/js/telegram-web-app.js` To: `https://ashaxer.github.io/MuskEmpire-PC-AutoBuy/telegram-web-app.js`
+(You can make all webapps playable by adding From: `*telegram-web-app.js*` To: `https://ashaxer.github.io/MuskEmpire-PC-AutoBuy/telegram-web-app.js`)
 ![Extension settings](settings.png)
 
 ## Changing User-Agent
