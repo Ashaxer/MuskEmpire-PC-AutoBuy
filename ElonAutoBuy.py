@@ -179,7 +179,7 @@ class User:
         qualified_skills = []
         for skill in skills:
             qualified = False
-            if skill["key"] == "movie_theater":
+            if skill["key"] == "critical_thinking":
                 pass
             try:
                 my_skill = self.hero_skills[skill["key"]]
@@ -204,7 +204,10 @@ class User:
                                 qualified = True
                             else:
                                 for req_skill, req_level in matched_skill_limit["requiredSkills"].items():
-                                    if self.hero_skills[req_skill]["level"] >= req_level: qualified = True
+                                    try:
+                                        if self.hero_skills[req_skill]["level"] >= req_level: qualified = True
+                                    except:
+                                        pass #skill is not owned
             except:
                 skill_price = get_price(skill, 1)
                 skill_profit = get_profit(skill, 1)
@@ -402,9 +405,9 @@ if __name__ == "__main__":
     Hero.reqAll()
 
     while True:
-        best_item = Hero.Calculate()
+        best_items = Hero.Calculate()
         try:
-            best_item = best_item[0]
+            best_item = best_items[0]
             Hero.reqImprove(best_item["key"])
             print("--===≡≡≡≡≡≡ UPGRADED ≡≡≡≡≡≡===--")
             print(f"Purchased: {best_item['title']} from {best_item['categ']}")
