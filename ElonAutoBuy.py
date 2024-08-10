@@ -27,6 +27,7 @@ class User:
         self.dbs_data = None
         self.assets_data = None
         self.all_data = None
+        self.after_data = None
         self.improve_data = None
         self.sync_data = None
         self.first_run = True
@@ -82,12 +83,28 @@ class User:
             self.hero_level = response["data"]["hero"]["level"]
             self.money = response["data"]["hero"]["money"]
             self.moneyPH = response["data"]["hero"]["moneyPerHour"]
+            self._calculate_levelupProgress()
+            return self.all_data
+        except Exception as e:
+            print("Error at reqAll:\n", e)
+            return False
+
+    def reqAfter(self):
+        try:
+            payload = {"data": {"lang":"en"}}
+            payload = json.dumps(payload,separators=(",",":"))
+            headers = HeaderGen(payload, self.apikey)
+            url = f"{api_url}/user/data/after"
+            response = post(url=url, headers=headers, data=payload).json()
+            print("get_after method:",response["success"])
+            self.after_data = response
             self.hero_skills = response["data"]["skills"]
             self._calculate_levelupProgress()
             return self.all_data
         except Exception as e:
             print("Error at reqAll:\n", e)
             return False
+
 
     def reqImprove(self, item):
         try:
@@ -171,16 +188,17 @@ class User:
 
     def _calculate_levelupProgress(self):
         self.levelup_progress = (self.exp - self.dbs_data["data"]["dbLevels"][self.hero_level-1]["exp"]) / (self.dbs_data["data"]["dbLevels"][self.hero_level]["exp"] - self.dbs_data["data"]["dbLevels"][self.hero_level-1]["exp"])
-        self.hero_title = self.dbs_data["data"]["dbLevels"][self.hero_level]["title"]
+        self.hero_title = self.dbs_data["data"]["dbLevels"][self.hero_level-1]["title"]
 
     def Calculate(self):
         skills = self.dbs_data["data"]["dbSkills"]
         self._convert_datetime2timestamp()
         qualified_skills = []
         for skill in skills:
+            if skill["category"] == "mining": continue #skip mining category upgrade
             qualified = False
-            if skill["key"] == "critical_thinking":
-                pass
+            # if skill["key"] == "critical_thinking": #for debugging purposes
+            #     pass
             try:
                 my_skill = self.hero_skills[skill["key"]]
                 skill_price = get_price(skill, my_skill["level"] + 1)
@@ -403,6 +421,7 @@ if __name__ == "__main__":
     Hero.reqDbs()
     Hero.reqAssets()
     Hero.reqAll()
+    Hero.reqAfter()
 
     while True:
         best_items = Hero.Calculate()
