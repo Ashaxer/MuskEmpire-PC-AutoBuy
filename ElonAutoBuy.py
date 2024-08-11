@@ -106,8 +106,9 @@ class User:
             return False
 
 
-    def reqImprove(self, item):
+    def reqImprove(self, best_item, Print = False):
         try:
+            item = best_item["key"]
             payload = {"data": item}
             payload = json.dumps(payload,separators=(",",":"))
             headers = HeaderGen(payload, self.apikey)
@@ -116,6 +117,13 @@ class User:
             if not response["success"]:
                 print("[DEBUG]:", item, response["error"])
             else:
+                if Print:
+                    print("--===≡≡≡≡≡≡ UPGRADED ≡≡≡≡≡≡===--")
+                    print(f"Purchased: {best_item['title']} from {best_item['categ']}")
+                    print(f"New Level: {best_item['level'] + 1}")
+                    print(f"Price: {numbify(best_item['price'])}")
+                    print(f"Profit: {numbify(best_item['profit'])}")
+                    print(f"Ratio: {round(best_item['ratio'], 4)}")
                 self.improve_data = response
                 self.hero_level = response["data"]["hero"]["level"]
                 self.money = response["data"]["hero"]["money"]
@@ -197,15 +205,16 @@ class User:
         for skill in skills:
             if skill["category"] == "mining": continue #skip mining category upgrade
             qualified = False
-            # if skill["key"] == "critical_thinking": #for debugging purposes
-            #     pass
+            if skill["key"] == "recommendation_systems": #for debugging purposes
+                pass
             try:
                 my_skill = self.hero_skills[skill["key"]]
                 skill_price = get_price(skill, my_skill["level"] + 1)
                 skill_profit = get_profit(skill, my_skill["level"] + 1) - get_profit(skill, my_skill["level"])
                 if skill["maxLevel"] <= my_skill["level"]: continue
-                if (0 if my_skill["finishUpgradeDate"] is None else my_skill[
-                    "finishUpgradeDate"]) < time.time() and self.money > skill_price:
+                if self.money < skill_price: continue
+                elif (0 if my_skill["finishUpgradeDate"] is None else my_skill[
+                    "finishUpgradeDate"]) < time.time():
                     if len(skill["levels"]) == 0:
                         qualified = True
                     else:
@@ -224,20 +233,33 @@ class User:
                                 for req_skill, req_level in matched_skill_limit["requiredSkills"].items():
                                     try:
                                         if self.hero_skills[req_skill]["level"] >= req_level: qualified = True
+                                        else: skill
                                     except:
                                         pass #skill is not owned
             except:
                 skill_price = get_price(skill, 1)
                 skill_profit = get_profit(skill, 1)
                 my_skill = {"level": 0}
-                if self.money > skill_price and len(skill["levels"]) == 0:
-                    qualified = True
+                if self.money < skill_price: continue
+                elif len(skill["levels"]) == 0: qualified = True
                 else:
+                    matched_skill_limit = None
                     for skill_limit in skill["levels"]:
-                        if (skill_limit["requiredHeroLevel"] <= self.hero_level and skill_limit["requiredFriends"] <=
-                                self.friends):
-                            if len(skill_limit["requiredSkills"]) == 0:
-                                qualified = True
+                        if my_skill["level"] == skill_limit["level"] - 1:
+                            matched_skill_limit = skill_limit
+                            break
+                    if matched_skill_limit is None:
+                        qualified = True
+                    elif matched_skill_limit["requiredHeroLevel"] <= self.hero_level and matched_skill_limit[
+                        "requiredFriends"] <= self.friends:
+                        if len(matched_skill_limit["requiredSkills"]) == 0:
+                            qualified = True
+                        else:
+                            for req_skill, req_level in matched_skill_limit["requiredSkills"].items():
+                                try:
+                                    if self.hero_skills[req_skill]["level"] >= req_level: qualified = True
+                                except:
+                                    pass #skill is not owned
             if qualified:
                 qualified_skill = {}
                 qualified_skill["key"] = skill["key"]
@@ -248,7 +270,7 @@ class User:
                 qualified_skill["price"] = skill_price
                 qualified_skill["profit"] = skill_profit
                 qualified_skills.append(qualified_skill)
-        best_skill = sorted(qualified_skills, key=lambda x: x["ratio"])[::-1]
+        best_skill = sorted(qualified_skills, key=lambda x: (x["level"] != 0, -x["ratio"])) #now Level 0 have priorities
         return best_skill
 
 
@@ -426,15 +448,7 @@ if __name__ == "__main__":
     while True:
         best_items = Hero.Calculate()
         try:
-            best_item = best_items[0]
-            Hero.reqImprove(best_item["key"])
-            print("--===≡≡≡≡≡≡ UPGRADED ≡≡≡≡≡≡===--")
-            print(f"Purchased: {best_item['title']} from {best_item['categ']}")
-            print(f"New Level: {best_item['level']+1}")
-            print(f"Price: {numbify(best_item['price'])}")
-            print(f"Profit: {numbify(best_item['profit'])}")
-            print(f"Ratio: {round(best_item['ratio'],4)}")
-            print()
+            Hero.reqImprove(best_items[0], True)
         except:
             pass
         print("--===≡≡≡≡≡≡ STATUS ≡≡≡≡≡≡===--")
