@@ -205,7 +205,7 @@ class User:
         for skill in skills:
             if skill["category"] == "mining": continue #skip mining category upgrade
             qualified = False
-            if skill["key"] == "recommendation_systems": #for debugging purposes
+            if skill["key"] == "quantum_computing": #for debugging purposes
                 pass
             try:
                 my_skill = self.hero_skills[skill["key"]]
@@ -447,21 +447,27 @@ if __name__ == "__main__":
 
     while True:
         best_items = Hero.Calculate()
-        try:
-            Hero.reqImprove(best_items[0], True)
-        except:
-            pass
+        if len(best_items) == 0:
+            print("--=== No Qualified Skills Found. Sleeping longer ===--")
+            timer = random.randint(5400,14400)
+            print(f"--=== Waiting {timer} Secs ===--")
+            time.sleep(timer)
+        else:
+            try:
+                Hero.reqImprove(best_items[0], True)
+            except:
+                pass
+        if Hero.money < (Hero.moneyPH / 5):
+            print("--=== Low Amount of Money Detected. Sleeping longer ===--")
+            timer = random.randint(5400,14400)
+        else:
+            timer = random.randint(3,15)
         print("--===≡≡≡≡≡≡ STATUS ≡≡≡≡≡≡===--")
         print("Hero:",Hero.hero_name, f"({Hero.hero_title})")
         print("Level:",Hero.hero_level, f"({round(Hero.levelup_progress*100)}%)")
         print("Money:",numbify(Hero.money))
         print("Profit/H",numbify(Hero.moneyPH))
         print()
-        if Hero.money < (Hero.moneyPH / 5):
-            print("--=== Low Amount of Money Detected. Sleeping longer ===--")
-            timer = random.randint(5400,14400)
-        else:
-            timer = random.randint(3,15)
         print(f"--=== Waiting {timer} Secs ===--")
         time.sleep(timer)
         print()
